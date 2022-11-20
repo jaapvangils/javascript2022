@@ -1,4 +1,5 @@
 var telkliks = 0;
+alert("start");
 
 function getRandomColor() {
   var letters = '0123456789ABCDEF';
