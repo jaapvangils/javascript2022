@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <body>
+  <h2>JavaScript HTML DOM</h2>
+  <p>Hallo allemaal!</p>
+  <p>Hallo Technie College Rotterdam!</p>
+  <p>Klik op de button om p elementen van kleur te laten veranderen.</p>
+  <button onclick="myFunction()">Try it</button>
+
+  <script>
+    function getRandomColor() {
+      var letters = '0123456789ABCDEF';
+      var color = '#';
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+    return color;
+    }
+
+    function myFunction() {
+      const myCollection = document.getElementsByTagName("p");
+      for (let i = 0; i < myCollection.length; i++) {
+        myCollection[i].style.color = getRandomColor();
+      }
+    }
+  </script>
+</body>
+</html>
