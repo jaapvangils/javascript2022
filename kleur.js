@@ -1,27 +1,32 @@
-//initieren variabele buiten de functies.
-var telkliks = 0;
+var telkliks = 0; // variable teller op 0
 
-// functie om een random kleur te fabriceren op basis van 
-// hexadecimale code (#000000-#FFFFFF)
-function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
-
-// functie om alle kleuren van de elementen 'p' aan te passen
-function kleuraanpassen() {
-  // alle p regels komen in de const (array)
-  const myCollection = document.getElementsByTagName("p");
-  // met een for lus van 0 tot het aantal "p"'s in de tekst
-  for (let i = 0; i < myCollection.length; i++) {
-    myCollection[i].style.color = getRandomColor();
-  }
-  // optellen van het aantal kliks/hovers
+// functie om kleur aan te passen
+function kleuraanpassen()
+{
   telkliks++;
-  // weergeven van de uitkomst van de teller op de html pagina, gekoppeld aan een ID
-  document.getElementById("teller").innerHTML="Aantal keer geklikt:" + telkliks;
+  document.getElementById("teller").innerHTML = "aantal: " + telkliks;
+
+  // kleur <p> aanpassen 
+
+  const AllePs = document.getElementsByTagName("p");
+
+  for (let i = 0; i < AllePs.length; i++) // for loop om alle p's langs te lopen
+  {
+    AllePs[i].style.color = randomGenerator(); // kleur aanpassen per regel p
+  }
 }
+
+// random generator voor kleur genereren b.v. #AB1234
+function randomGenerator() 
+{
+  const lettersHex = '0123456789ABCDEF'; // hexadecimale karakters
+  var kleur = '#'; // begin van de string met hexadecimale code voor de kleur
+  for (var n = 0; n < 6; n++)
+  {
+    kleur += lettersHex[Math.floor(Math.random() * 16)];
+  }
+  return kleur;
+}
+
+
+// ALTERNATIEF: Math.floor(Math.random()*255*255*255)
