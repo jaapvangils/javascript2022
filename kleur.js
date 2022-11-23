@@ -1,32 +1,27 @@
-var telkliks = 0; // variable teller op 0
+var telKliks = 0; // varibele op 0
 
-// functie om kleur aan te passen
 function kleuraanpassen()
 {
-  telkliks++;
-  document.getElementById("teller").innerHTML = "aantal: " + telkliks;
+  telKliks++; // teller + 1
+  // terug schrijven op pagina
+  document.getElementById("teller").innerHTML = "aantal: " + telKliks;
 
-  // kleur <p> aanpassen 
-
+  // inlezen van verwijzingen naar de <p> in de html
   const AllePs = document.getElementsByTagName("p");
-
-  for (let i = 0; i < AllePs.length; i++) // for loop om alle p's langs te lopen
+  
+  // loop waarin alle p's in de html worden veranderd van kleur
+  for (var i = 0; i < AllePs.length; i++)
   {
-    AllePs[i].style.color = randomGenerator(); // kleur aanpassen per regel p
+    AllePs[i].style.color = randomGenerator();
   }
 }
 
-// random generator voor kleur genereren b.v. #AB1234
-function randomGenerator() 
-{
-  const lettersHex = '0123456789ABCDEF'; // hexadecimale karakters
-  var kleur = '#'; // begin van de string met hexadecimale code voor de kleur
-  for (var n = 0; n < 6; n++)
-  {
-    kleur += lettersHex[Math.floor(Math.random() * 16)];
+// randomgenerator om string met kleurcode te genereren b.v. #A3F1D0
+function randomGenerator() {
+  const lHex = '0123456789ABCDEF';
+  var kleur ="#";
+  for (var i = 1; i < 7; i++) {
+    kleur += lHex[Math.floor(Math.random() * 16 ) ];
   }
   return kleur;
 }
-
-
-// ALTERNATIEF: Math.floor(Math.random()*255*255*255)
