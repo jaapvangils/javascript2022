@@ -1,27 +1,27 @@
-//initieren variabele buiten de functies.
-var telkliks = 0;
+var telKliks = 0; // varibele op 0
 
-// functie om een random kleur te fabriceren op basis van 
-// hexadecimale code (#000000-#FFFFFF)
-function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
+function kleuraanpassen()
+{
+  telKliks++; // teller + 1
+  // terug schrijven op pagina
+  document.getElementById("teller").innerHTML = "aantal: " + telKliks;
+
+  // inlezen van verwijzingen naar de <p> in de html
+  const AllePs = document.getElementsByTagName("p");
+  
+  // loop waarin alle p's in de html worden veranderd van kleur
+  for (var i = 0; i < AllePs.length; i++)
+  {
+    AllePs[i].style.color = randomGenerator();
   }
-  return color;
 }
 
-// functie om alle kleuren van de elementen 'p' aan te passen
-function kleuraanpassen() {
-  // alle p regels komen in de const (array)
-  const myCollection = document.getElementsByTagName("p");
-  // met een for lus van 0 tot het aantal "p"'s in de tekst
-  for (let i = 0; i < myCollection.length; i++) {
-    myCollection[i].style.color = getRandomColor();
+// randomgenerator om string met kleurcode te genereren b.v. #A3F1D0
+function randomGenerator() {
+  const lHex = '0123456789ABCDEF';
+  var kleur ="#";
+  for (var i = 1; i < 7; i++) {
+    kleur += lHex[Math.floor(Math.random() * 16 ) ];
   }
-  // optellen van het aantal kliks/hovers
-  telkliks++;
-  // weergeven van de uitkomst van de teller op de html pagina, gekoppeld aan een ID
-  document.getElementById("teller").innerHTML="Aantal keer geklikt:" + telkliks;
+  return kleur;
 }
