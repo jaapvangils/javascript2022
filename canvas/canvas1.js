@@ -1,16 +1,12 @@
-var canvas = document.getElementById("mijnCanvas"); // pointer naar mijnCanvas
+var canvas = document.getElementById("mijnCanvas"); //in canvas verwijzing naar mijnCanvas in html
+var tekst = canvas.getContext("2d"); // koppelt tekst aan 2d omgeving canvas
+tekst.font = "20px Arial";
+tekst.fillText("Hallo",70,20);
 
-var tekst = canvas.getContext("2d"); // in tekst laden van 2d context
-tekst.font = "20px Arial"; // font Arial 20px toekennen
-tekst.fillText("Hallo",20,20) // tekst schrijven in 2d context in mijnCanvas
+// regel 1,2,4:
+//document.getElementById("mijnCanvas").getContext("2d").font = "10px Arial";
+//document.getElementById("mijnCanvas").getContext("2d").fillText("test",120,120);
 
-// extra object met 4 kant
-var vierhoek = canvas.getContext("2d");
-vierhoek.fillStyle = "#880088";
-vierhoek.fillRect(10,110,180,20);
-
-
-
-
-//document.getElementById("mijnCanvas").getContext("2d").font = "20px Arial";
-//document.getElementById("mijnCanvas").getContext("2d").fillText("tekst",80,80);
+var vierhoek = canvas.getContext("2d"); // volgend object in 2d omgeving 
+vierhoek.fillStyle = "#FFFF00"; // kleur van object
+vierhoek.fillRect(10,150,40,40); // tekenen vierhoek x,y, breedte, hoogte
