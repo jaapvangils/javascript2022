@@ -8,6 +8,8 @@ var speed = 5; // snelheid van bewegen sprite
 
 tekenSprite();
 
+//setInterval(randomPlek, 2000); // elke 2 seconden een andere plek (2000ms)
+
 document.addEventListener("keydown", (event) => {
     let keypressed = event.key; // uitlezen event / toetsenbord
     console.log(keypressed); // uitlezen in log (F12)
@@ -44,3 +46,9 @@ function tekenSprite() {
     ctx.fillRect(SpritePositionX, SpritePositionY, 20, 20);
 }
 
+function randomPlek() {
+    console.log("willekeurige plek");
+    SpritePositionX = Math.floor(Math.random()*475);
+    SpritePositionY= Math.floor(Math.random()*475);
+    tekenSprite();
+}
