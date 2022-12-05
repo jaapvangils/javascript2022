@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
     <title>Canvas2</title>
-    <script src="canvas2.js"></script>
+    <script src="canvas3.js"></script>
 </head>
-<body onload="startCanvas()"> <!-- bij het laden van body functie startCanvas uitvoeren -->
-  <p>Rood vierkant</p>
+<body> <!-- bij het laden van body functie startCanvas uitvoeren -->
+  <canvas id="blokCanvas" width="200" height="200" style="border:1px solid red"></canvas>
+  <p>Gebruik pijltjestoetsen om het blok te bewegen</p>
+  <button onclick="startCanvas();">Start Canvas</button>
+  <p id="teller">Tel</p>
 </body>
 </html>
