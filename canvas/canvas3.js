@@ -1,47 +1,62 @@
-var mijnObject; // variabele voor object 1
-var nwCanvas; // variabele voor een te creeren canvas
-var nwContext;
-var ObjX = 10;
-var ObjY = 10;
-var ObjKleur = "red";
-var ObjH = 10;
-var ObjB = 10;
+	// Declare and assign variables.
+	let object1Size = {
+	  width: 20,
+	  height: 20
+	};
+	let position = {
+	  x: 10,
+	  y: 10
+	};
+	let moveRate = 10;
+	let object1 = document.getElementById("object1");
+	
+  // ververs de Y.
+	function verversYPositie(distance) {
+	  position.y -= distance;
+	  // randen detecteren
+	  if (position.y < 0) {
+	    position.y = 499;
+	  } else if (position.y > 499) {
+	    position.y = 0;
+	  }
+	}
 
-var teller;
+	// ververs de X.
+	function verversXpositie(distance) {
+	  position.x += distance;
+	  // Randen detecteren
+	  if (position.x < 0) {
+	    position.x = 499;
+	  } else if (position.x > 499) {
+	    position.x = 0;
+	  }
+	}
 
-//functie canvas maken
-function startCanvas() {
-    nwCanvas = document.getElementById("blokCanvas"); // nwCanvas wordt een canvas element (tag)
-    nwCanvas.width = 480; // breedte
-    nwCanvas.height = 360; //hoogte
-    nwContext = nwCanvas.getContext("2d");
-    
-    mijnObject = new objectMaker(ObjB,ObjH, ObjKleur, ObjX,ObjY); // object creeren - X en Y aangepast objX,objY, ObjKleur, ObjB, ObjH
+	function verversPositie() {
+	  let x = position.x - (object1Size.width/2);
+	  let y = position.y - (object1Size.height/2);
+	  let transform = "translate(" + x + " " + y + ")";
 
-    setInterval(bewegendObj, 500);
-  }
+	  object1.setAttribute("transform", transform);
+	}
 
-function bewegendObj ()
-{
-  nwContext.clearRect(0,0, nwCanvas.canvas.width, nwCanvas.canvas.height);
-  window.addEventListener('keydown', function (invoer) {
-
-    if (invoer.keys[37]) {ObjX -= 1; alert("omhoog"); } //links
-    if (invoer.keys[39]) {ObjX += 1; } // rechts
-    if (invoer.keys[38]) {ObjY -= 1; } // omhoog
-    if (invoer.keys[40]) {ObjY += 1; } // omlaag
-    mijnObject.x = ObjX;
-    mijnObject.y = ObjY;
-  } );
-  teller++;
-  document.getElementById("teller").innerHTML=teller;
-}
-
-function objectMaker(breedte, hoogte, kleur, x, y) {
-  this.breedte = breedte;
-  this.hoogte = hoogte;
-  this.x = x;
-  this.y = y;
-  nwContext.fillStyle = kleur;
-  nwContext.fillRect(this.x, this.y, this.breedte, this.hoogte);
-}
+	window.addEventListener("keydown", function(toets) {
+	  if (toets.defaultPrevented) {
+	    return;
+	  }
+	  if (toets.code === "ArrowDown"){
+	      // Handle "down"
+	      verversYPositie(-moveRate);
+	  } else if (toets.code === "ArrowUp"){
+	      // Handle "up"
+	      verversYPositie(moveRate);
+	  } else if (toets.code === "ArrowLeft"){
+	      // Handle "left"
+	     verversXpositie(-moveRate);
+	  } else if (toets.code === "ArrowRight"){
+	      // Handle "right"
+	     verversXpositie(moveRate);
+	  }
+	  verversPositie();
+	  toets.preventDefault();
+	}, true);

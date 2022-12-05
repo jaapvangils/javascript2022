@@ -1,13 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <title>Canvas2</title>
-    <script src="canvas3.js"></script>
+	<style type="text/css">
+		/* svg achtergrondkleur. */
+		.area {
+			background-color: #555555; 
+	  }
+	</style>
 </head>
-<body> <!-- bij het laden van body functie startCanvas uitvoeren -->
-  <canvas id="blokCanvas" width="200" height="200" style="border:1px solid red"></canvas>
-  <p>Gebruik pijltjestoetsen om het blok te bewegen</p>
-  <button onclick="startCanvas();">Start Canvas</button>
-  <p id="teller">Tel</p>
+<body>
+  <p>Gebruik pijltjestoetsen.</p>
+  <svg width="500px" height="500px" class="area">
+    <rect id="object1" x="10" y="10" width="20" height="20" fill="black" />
+  </svg>
+  <script>verversPositie();</script>
 </body>
+
+<script>
+	// Declare and assign variables.
+	let object1Size = {
+	  width: 20,
+	  height: 20
+	};
+	let position = {
+	  x: 10,
+	  y: 10
+	};
+	let moveRate = 10;
+	let object1 = document.getElementById("object1");
+	
+  // ververs de Y.
+		function verversYPositie(distance) {
+	  position.y -= distance;
+	// randen detecteren
+	  if (position.y < 0) {
+	    position.y = 499;
+	  } else if (position.y > 499) {
+	    position.y = 0;
+	  }
+	}
+
+	// ververs de X.
+	function verversXpositie(distance) {
+	  position.x += distance;
+	  // Randen detecteren
+	  if (position.x < 0) {
+	    position.x = 499;
+	  } else if (position.x > 499) {
+	    position.x = 0;
+	  }
+	}
+
+	function verversPositie() {
+	  let x = position.x - (object1Size.width/2);
+	  let y = position.y - (object1Size.height/2);
+	  let transform = "translate(" + x + " " + y + ")";
+
+	  object1.setAttribute("transform", transform);
+	}
+
+	window.addEventListener("keydown", function(toets) {
+	  if (toets.defaultPrevented) {
+	    return;
+	  }
+	  if (toets.code === "ArrowDown"){
+	      // Handle "down"
+	      verversYPositie(-moveRate);
+	  } else if (toets.code === "ArrowUp"){
+	      // Handle "up"
+	      verversYPositie(moveRate);
+	  } else if (toets.code === "ArrowLeft"){
+	      // Handle "left"
+	     verversXpositie(-moveRate);
+	  } else if (toets.code === "ArrowRight"){
+	      // Handle "right"
+	     verversXpositie(moveRate);
+	  }
+	  verversPositie();
+	  toets.preventDefault();
+	}, true);
+
+</script>
 </html>
