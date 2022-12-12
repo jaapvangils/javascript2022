@@ -8,30 +8,28 @@ var stapGrootte = 5; // sneldheid van bewegen blokje
 tekenSprite();
 
 document.addEventListener("keydown", (uitlezen) => {
-    let toets = uitlezen.key; // uitlezen van 1 toetsindruk
-    switch (toets) {
-        case "ArrowUp": // pijl omhoog => Y verminderen met stapgrootte
+    let toets = (uitlezen.keys || []); // uitlezen van 1 toetsindruk
+    if (toets[38]) {
+         // pijl omhoog => Y verminderen met stapgrootte
             SpritePositieY -= stapGrootte;
             tekenSprite();
-            break;
-        case "ArrowDown":
+    }
+    if (toets[40]) { 
             SpritePositieY += stapGrootte;
             tekenSprite();
-            break;
-        case "ArrowRight":
+    }
+    if (toets[39]) {
             SpritePositieX += stapGrootte;
             tekenSprite();
-            break;
-        case "ArrowLeft":
+    }
+    if (toets[37]) {
             SpritePositieX -= stapGrootte;
             tekenSprite();
-            break;
-        case " ": // bij spatie -> springen
+        }
+    if (toets[32]) { // bij spatie -> springen
             springOmhoog(); // functie spring omhoog
-            break;
-            
-        default: break; // standaard (dus bij andere indruk): direct afbreken
     }
+            
 });
 
 
@@ -43,15 +41,15 @@ function sleep(ms) {
   }
 
 async function springOmhoog() { // asynchrone functie: deze neemt wat tijd in beslag.
-    for (i = 0; i < 15; i++) // loop om 15x omhoog te bewegen
+    for (i = 0; i < 20; i++) // loop om 15x omhoog te bewegen
     {
-        SpritePositieY -= 3;
+        SpritePositieY -= 2;
         await sleep(25); // met await gaat het script pas verder nadat sleep (25) klaar is met afspelen.
         tekenSprite(); // elke keer een afdruk maken
     }
-    for (i = 0; i < 15; i++) // en weer terugbewegen.
+    for (i = 0; i < 20; i++) // en weer terugbewegen.
     {
-        SpritePositieY += 3;
+        SpritePositieY += 2;
         await sleep(25);
         tekenSprite();
     }
