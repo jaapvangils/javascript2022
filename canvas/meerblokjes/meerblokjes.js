@@ -1,4 +1,5 @@
 var myGamePiece;
+var linkcanvas = document.getElementsByTagName("canvas");
 
 function startGame() {
     myGameArea.start();
@@ -6,12 +7,10 @@ function startGame() {
 }
 
 var myGameArea = {
-    canvas : document.createElement("canvas"),
     start : function() {
-        this.canvas.width = 480;
-        this.canvas.height = 270;
-        this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        linkcanvas.width = 480;
+        linkcanvas.height = 270;
+        this.context = linkcanvas.getContext("2d");
         this.interval = setInterval(updateGameArea, 20);
         window.addEventListener('keydown', function (e) {
             myGameArea.keys = (myGameArea.keys || []);
@@ -22,7 +21,7 @@ var myGameArea = {
         })
     }, 
     clear : function(){
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.clearRect(0, 0, linkcanvas.width, linkcanvas.height);
     }
 }
 
