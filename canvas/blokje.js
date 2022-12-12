@@ -7,8 +7,9 @@ var stapGrootte = 5; // sneldheid van bewegen blokje
 
 tekenSprite();
 
-document.addEventListener("keydown", (uitlezen) => {
+document.addEventListener("keydown", function (uitlezen) {
     let toets = (uitlezen.keys || []); // uitlezen van 1 toetsindruk
+    
     if (toets[38]) {
          // pijl omhoog => Y verminderen met stapgrootte
             SpritePositieY -= stapGrootte;
