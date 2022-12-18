@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="lingo.css">
+   
+    <title>Lingo</title>
+</head>
+
+<body>
+    <div id='msgBox'>Guess the word!</div>
+    <div id="smallMsg">Green = correct letter, Yellow = wrong place</div>
+    <div id="container">
+        <div id="row1">
+            <div class="square default"></div>
+            <div class="square default"></div>
+            <div class="square default"></div>
+            <div class="square default"></div>
+            <div class="square default"></div>
+        </div>
+        <div id="row2">
+            <div class="square default"></div>
+            <div class="square default"></div>
+            <div class="square default"></div>
+            <div class="square default"></div>
+            <div class="square default"></div>
+        </div>
+        <div id="row3">
+            <div class="square default"></div>
+            <div class="square default"></div>
+            <div class="square default"></div>
+            <div class="square default"></div>
+            <div class="square default"></div>
+        </div>
+        <div id="row4">
+            <div class="square default"></div>
+            <div class="square default"></div>
+            <div class="square default"></div>
+            <div class="square default"></div>
+            <div class="square default"></div>
+        </div>
+        <div id="row5">
+            <div class="square default"></div>
+            <div class="square default"></div>
+            <div class="square default"></div>
+            <div class="square default"></div>
+            <div class="square default"></div>
+        </div>
+    </div>
+    <input id="guess" onkeypress="submitguess(this)" placeholder='Type your guess!'>
+    <button id="button" class="invisible" onClick="playagain()">Play Again?</button>
+    <P>&nbsp</P>
+
+    
+    <script src="lingo.js"></script>
+    <button id="button" onClick="gameloop()">START</button>
+</body>
+
+</html>
