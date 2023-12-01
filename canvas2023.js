@@ -5,6 +5,20 @@ canvas.width = 800;
 canvas.height = 600;
 document.body.appendChild(canvas);
 
-ctx.beginPath(); // start met tekenen
-ctx.rect(20, 20, 150, 100); // teken een vierhoek
-ctx.stroke(); //schrijf de tekening weg
+// Variabelen voor de positie en snelheid van de cirkel
+let x = 50; // startpositie X
+let y = 50; // startpositie Y
+let dx = 2; // snelheid X
+let dy = 2; // snelheid Y
+let radius = 20; // radius van de cirkel
+
+// functie om een circel te tekenen
+function drawCircle() {
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2, true);
+    ctx.fillStyle = 'blue';
+    ctx.fill();
+    ctx.closePath();
+}
+//testen:
+drawCircle();
