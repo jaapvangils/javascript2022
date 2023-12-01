@@ -7,6 +7,20 @@ canvas.height = 600;
 ctx.fillStyle = '#FF0000';
 document.body.appendChild(canvas);
 
-ctx.beginPath();
-ctx.rect(20, 20, 150, 100);
-ctx.stroke();
+// Variabelen voor de positie en snelheid van de cirkel
+let x = 50; // startpositie X
+let y = 50; // startpositie Y
+let dx = 2; // snelheid X
+let dy = 2; // snelheid Y
+let radius = 20; // radius van de cirkel
+
+// De functie om de cirkel te tekenen
+function drawCircle() {
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2, true);
+    ctx.fillStyle = 'blue';
+    ctx.fill();
+    ctx.closePath();
+}
+
+drawCircle();
