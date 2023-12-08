@@ -5,19 +5,44 @@ canvas.width = 800;
 canvas.height = 600;
 document.body.appendChild(canvas);
 
-
 // Variabelen voor de positie en snelheid van de cirkel
 let x = 50; // startpositie X
 let y = 50; // startpositie Y
-let dx = 0; // snelheid X , 0 om nog even niet te starten
+let dx = 0; // snelheid X
 let dy = 0; // snelheid Y
 let radius = 20; // radius van de cirkel
 
-// Variabelen voor de tweede bal
-let x2 = 100; // startpositie X voor de tweede bal
-let y2 = 100; // startpositie Y voor de tweede bal
-let radius2 = 20; // radius van de tweede bal
-let speed = 5; // snelheid waarmee de tweede bal beweegt
+//variabelen cirkel 2:
+let x2 = 100; // startpositie bal 2
+let y2 = 100;
+let snelheid = 5; // snelheid van sprongen vd bal
+let radius2 = 15; // radius van cirkel 2
+
+// functie om de bal te laten bewegen
+function startBewegen() {
+    dx = 4;
+    dy = 3;
+}
+
+document.getElementById('startButton').addEventListener('click', startBewegen);
+
+// eventlistner luistert toetsenbord uit en laad informatie in variabele event.
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowLeft') { 
+        x2 -= snelheid; // x2 = x2 - snelheid
+        if (x2+radius2 < 0) { x2 = canvas.width - radius2; } // spring naar de andere kant
+    } else if (event.key === 'ArrowRight') { 
+        x2 += snelheid;
+        if (x2-radius2 > canvas.width) { x2 = radius2; } // sprint naar de andere kant
+    }
+    if (event.key === 'ArrowUp') {
+        y2 -= snelheid;
+        if (y2 < radius2) { y2 = radius2; } // blijf op de plek
+    } else if (event.key === 'ArrowDown') {
+        y2 += snelheid;
+        if (y2 > canvas.height-radius2) { y2 = canvas.height-radius2; } // blijf op de plek
+    }
+});
 
 // De functie om de cirkel te tekenen
 function drawCircle() {
@@ -28,8 +53,8 @@ function drawCircle() {
     ctx.closePath();
 }
 
-// Functie om de tweede bal te tekenen
-function drawSecondCircle() {
+// De functie om de 2e cirkel te tekenen
+function drawCircle2() {
     ctx.beginPath();
     ctx.arc(x2, y2, radius2, 0, Math.PI * 2, true);
     ctx.fillStyle = 'red';
@@ -37,37 +62,19 @@ function drawSecondCircle() {
     ctx.closePath();
 }
 
-// Event listener voor toetsaanslagen
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'ArrowLeft') {
-        x2 -= speed;
-    } else if (event.key === 'ArrowRight') {
-        x2 += speed;
-    } else if (event.key === 'ArrowUp') {
-        y2 -= speed;
-    } else if (event.key === 'ArrowDown') {
-        y2 += speed;
-    }
-});
-
-function startMoving() {
-    dx = 2;
-    dy = 2;
+function collision() {
+    // testen of de x en x2 elkaar raken en de y en y2 elkaar raken
+    if (x == x2 && y == y2) {alert ("game over");}
 }
-
-// Voeg een event listener toe aan de knop
-document.getElementById('startButton').addEventListener('click', startMoving);
-
-
 // De update functie die elke frame wordt uitgevoerd
 function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#FEFEFE";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    drawCircle();
-
-    drawSecondCircle(); // Teken de tweede bal
+    drawCircle(); // teken cirkel 1
+    drawCircle2(); // teken 2e bal
+    collision();
 
     // Verander de positie van de cirkel
     x += dx;
