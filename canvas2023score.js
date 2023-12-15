@@ -26,7 +26,6 @@ function scoreBijhouden() {
     if (teller > tijd) {
         teller = 0;
         score++;
-
     }
     teller++;
     ctx.font = "10px Arial";
