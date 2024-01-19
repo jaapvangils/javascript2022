@@ -8,30 +8,32 @@ var Spr1Formaat = 40;
 var Spr2x = 200;
 var Spr2y = 200;
 var Spr2formaat = 30;
+var Sprong = 2; //snelheid van het groene blok
+var Tempo = 3; //snelheid van het rode blok
 var ingedrukteToets = []; //in[0] = false; in[1] = true;
 
-document.addEventListener("keydown", function (uitlezen) {
-  ingedrukteToets = ingedrukteToets || [];
-  ingedrukteToets[uitlezen.keyCode] = true;
-})
-document.addEventListener("keyup", function (uitlezen) {
-  ingedrukteToets[uitlezen.keyCode] = false;
-})
+document.addEventListener("keydown", function (event) {
+  ingedrukteToets[event.code] = true; // Gebruik event.code voor een meer specifieke toetsaanduiding.
+});
+
+document.addEventListener("keyup", function (event) {
+  ingedrukteToets[event.code] = false; // Zet de toetsstatus terug op 'false' wanneer de toets wordt losgelaten.
+});
 
 setInterval(speelVeldUpdate, 5);
 
 function speelVeldUpdate() {
-  if (ingedrukteToets && ingedrukteToets[38]) { // pijl omhoog
-    Spr1PosY--;
+  if (ingedrukteToets['ArrowUp']) { // Pijl omhoog
+    Spr1PosY -= Sprong;
   }
-  if (ingedrukteToets && ingedrukteToets[40]) { // pijl beneden
-    Spr1PosY++;
+  if (ingedrukteToets['ArrowDown']) { // Pijl omlaag
+    Spr1PosY += Sprong;
   }
-  if (ingedrukteToets && ingedrukteToets[39]) {
-    Spr1PosX++;
+  if (ingedrukteToets['ArrowRight']) { // Pijl naar rechts
+    Spr1PosX += Sprong;
   }
-  if (ingedrukteToets && ingedrukteToets[37]) {
-    Spr1PosX--;
+  if (ingedrukteToets['ArrowLeft']) { // Pijl naar links
+    Spr1PosX -= Sprong;
   }
   // aanroepen diverse functies om beeld te tekenen en voor beweging
   ctx.clearRect(0,0,MyCanvas.offsetWidth, MyCanvas.offsetHeight);
@@ -68,12 +70,12 @@ function Spr2() {
   telSpr2++;
   if (telSpr2 > maxSpr2) {
     telSpr2 = 0;
-    richtSpr2X = Math.floor(Math.random()*3)-1; // 0,1,2 -> -1, 0, 1
-    richtSpr2Y = Math.floor(Math.random()*3)-1; 
+    richtSpr2X = Math.floor(Math.random()*5)-3; // 0,1,2 -> -1, 0, 1
+    richtSpr2Y = Math.floor(Math.random()*5)-3; 
   }
   // positie veranderen
-  Spr2x += richtSpr2X;
-  Spr2y += richtSpr2Y;
+  Spr2x += richtSpr2X*Tempo;
+  Spr2y += richtSpr2Y*Tempo;
   // testen op rand
   if (Spr2x<0) {richtSpr2X = 1;}
   if (Spr2x>MyCanvas.offsetWidth-Spr2formaat) {richtSpr2X = -1;}
