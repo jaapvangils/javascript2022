@@ -6,82 +6,58 @@ canvas.height = 600;
 document.body.appendChild(canvas);
 
 // Variabelen voor de positie en snelheid van de cirkel
-let x = canvas.width-50; // startpositie X
-let y = canvas.height-50; // startpositie Y
+let x = 50; // startpositie X
+let y = 50; // startpositie Y
 let dx = 0; // snelheid X
 let dy = 0; // snelheid Y
 let radius = 20; // radius van de cirkel
 
-// variabelen voor 2e bal
-let x2 = 100;
-let y2 = 150;
-let speed = 4;
-let radius2 = 10; // grootte van de bal
+//variabelen cirkel [x]:
+let x2 = 100; // startpositie bal 2
+let y2 = 100;
+let snelheid = 5; // snelheid van sprongen vd bal
+let radius2 = 15; // radius van cirkel 2
 
-let tijd = 20; // cyclus voor teller
-let score = 0; // start met score 0
-let teller = 0; // 
+// variabelen voor score
+let Score = 0;
 
-function scoreBijhouden() {
-    if (teller > tijd) {
-        teller = 0;
-        score++;
-
-    }
-    teller++;
-    ctx.font = "10px Arial";
+function scoreScherm() {
+    ctx.font = "20px Arial";
     ctx.fillStyle = "red";
-    ctx.fillText(String(score), 10, 10); 
+    ctx.fillText(String(Score),10,22); // weergeven score
 }
 
-document.addEventListener('keydown', function(event) {
-     if (event.key === 'ArrowLeft') {
-        x2 -= speed;
-        if (x2 < radius2) {
-            x2 = canvas.width - radius2;
-        }
-     } else if (event.key === 'ArrowRight') {
-        x2 += speed;
-        if (x2 > canvas.width - radius2) {
-            x2 = radius2;
-        }
-     }
-     if (event.key === 'ArrowUp' && y2 > radius2) {
-        y2 -= speed;
-     } else if (event.key === 'ArrowDown') {
-        y2 += speed;
-        if (y2 > canvas.height - radius2) {
-            y2 = canvas.height - radius2;
-        }
-     }
-});
-
-function collission() {
-    let dx = x - x2;
-    let dy = y - y2;
-    let distance = Math.sqrt(dx * dx + dy * dy);
-    
-    if (distance < radius + radius2) {
-        score = score - 50;
-        if (score < 0) {
-            alert("Game Over");
-            score = 0;
-        }
-        x=100; y=100;
-        x2 = 300; y2 = 200;
-        dx = 0; dy = 0;
-    }
-
+function scoreTeller() { // score optellen
+    Score++;
 }
 
-// starten van bewegen bal 1
+setInterval(scoreTeller, 100); // elke ... miliseconden score optellen
+
+// functie om de bal te laten bewegen
 function startBewegen() {
-    dx = 2;
+    dx = 3.3;
     dy = 2;
 }
-// functie om klik op button om te zetten in uitvoeren functie startBewegen
+
 document.getElementById('startButton').addEventListener('click', startBewegen);
 
+// eventlistner luistert toetsenbord uit en laad informatie in variabele event.
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowLeft') { 
+        x2 -= snelheid; // x2 = x2 - snelheid
+        if (x2+radius2 < 0) { x2 = canvas.width - radius2; } // spring naar de andere kant
+    } else if (event.key === 'ArrowRight') { 
+        x2 += snelheid;
+        if (x2-radius2 > canvas.width) { x2 = radius2; } // sprint naar de andere kant
+    }
+    if (event.key === 'ArrowUp') {
+        y2 -= snelheid;
+        if (y2 < radius2) { y2 = radius2; } // blijf op de plek
+    } else if (event.key === 'ArrowDown') {
+        y2 += snelheid;
+        if (y2 > canvas.height-radius2) { y2 = canvas.height-radius2; } // blijf op de plek
+    }
+});
 
 // De functie om de cirkel te tekenen
 function drawCircle() {
@@ -101,21 +77,35 @@ function drawCircle2() {
     ctx.closePath();
 }
 
+function collision() { // meten of de randen elkaar raken
+    let rx = x - x2;
+    let ry = y - y2;
+    let distance = Math.sqrt(rx * rx + ry * ry); // stelling van pythagoras
+    if (distance < radius + radius2) {
+        alert(`Score: ${Score} . Game Over!`); // score weergeven met alert
+        Score=0; // score weer op 0
+        x=100; y=100; //bal 1 reset
+        x2 = canvas.width-100; 
+        y2 = 200; // reset bal 2
+        dx = 0; dy = 0; // auto bewegen bal 1 uitzetten
+    }     
+}
+
 // De update functie die elke frame wordt uitgevoerd
 function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#FEFEFE";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
- 
-    drawCircle(); // eerste bal
-    drawCircle2(); // tweede bal
-    collission();
-    scoreBijhouden();
- 
+
+    drawCircle(); // teken cirkel 1
+    drawCircle2(); // teken 2e bal
+    collision();
+    scoreScherm();
+
     // Verander de positie van de cirkel
     x += dx;
     y += dy;
- 
+
     // Laat de cirkel stuiteren wanneer hij de randen van het canvas raakt
     if (x + dx > canvas.width - radius || x + dx < radius) {
         dx = -dx;
@@ -126,6 +116,6 @@ function update() {
 
     requestAnimationFrame(update); // Roep update weer aan voor de volgende frame
 }
- 
+
 // Start de animatieloop
 update();
